@@ -1,0 +1,198 @@
+.visualize{
+    /* height: 500px; */
+}
+
+.visualize .head h1{
+    /* height: 500px; */
+    text-align: center;
+}
+
+.c1Map h5{
+    color: red;
+    height: 1500px;
+}
+
+.mapV{
+    width: 100%;
+    margin: auto;
+    text-align: center;
+    border: 2px #555 solid; 
+    border-radius: 3px;
+}
+.overlayMap{
+    z-index: 1;
+    display: none;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-color: rgba(150, 150, 150, 0.8)
+    /* left: 50%;
+    top: 50%; */
+}
+
+.set_middle{
+    text-align: center;
+    margin: 5px
+}
+.set_margin_middle{
+    margin: auto;
+}
+
+/* #graph1{
+    width: 80%;
+    display: inline-block;
+    margin: 15px;
+} */
+/* .graph .graph_1_2{
+    border: 1px #555 solid;
+    display: inline-block;
+    width: 45%;
+    margin: 15px;
+}
+
+.graph .graph_1_1{
+    border: 1px #555 solid;
+    display: inline-block;
+    width: 70%;
+    margin: 15px;
+} */
+
+.description_index {
+    margin: 10px
+}
+
+.open-menu {
+    position: fixed;
+    /* top: 50%; */
+    z-index: 1;
+    /* display: none; */
+    /* cursor: pointer; */
+}
+.open-menu button {
+    /* background: transparent; */
+    background: #fff;
+    border: none;
+    cursor: pointer;
+
+}
+
+.side-menu {
+    position: fixed;
+    width: 20%;
+    z-index: 1;
+    background: #fff;
+    height: 100%;
+    box-shadow: 5px 5px 18px #000;
+    display: none;
+}
+
+.close-menu button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    margin: 12px;
+    /* float: right; */
+}
+.close-menu {
+    position: absolute;
+    right: 0;
+    top: 0;
+    /* background: transparent;
+    border: none;
+    cursor: pointer; */
+    float: right;
+    display: none;
+    /* display: inline-block; */
+}
+
+.showMapAll{
+    display: none;
+}
+
+.step3{
+    display: none;
+}
+
+.showGraphAll {
+    display: none;
+}
+
+.cardcustom {
+    border-radius: 3px;
+    border: #000 solid 1px;
+    box-shadow: 5px 5px 20px #888;
+    padding: 15px;
+}
+
+.custom-right{
+    margin: 20px 0;
+    display: inline-block;
+    width: 20%;
+}
+
+.head {
+    /* position: absolute;
+    top: 50%;
+    transform: translateY(-100%);
+    left: 50%;
+    margin-left: -50%;  */
+}
+
+
+
+
+
+
+
+
+
+.open-detail {
+    position: fixed;
+    right: 0;
+    z-index: 100;
+    /* display: none; */
+}
+.open-detail button {
+    /* background: transparent; */
+    background: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+.side-detail-in {
+    margin: 5px;
+    border: 1px solid black;
+    border-radius: 4px;
+}
+
+.side-detail-in .header{
+    padding: 9px;
+    border: 1px solid #ccc;
+    background: #ccc;
+    
+}
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: red;
+    color: white;
+    text-align: center;
+ }
+
+
+.blackTransition{
+    background: #000;
+    opacity: 0.3;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    display: none;
+    z-index: 1;
+}
+
+.load-data{
+    position: fixed;
+    display: none;
+}

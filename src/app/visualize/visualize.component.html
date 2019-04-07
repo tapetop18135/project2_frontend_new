@@ -1,0 +1,461 @@
+<!-- <button class="ShowDM">SSSS</button> -->
+<!-- <script src="https://code.highcharts.com/modules/no-data-to-display.js"></script> -->
+<div class="blackTransition"></div>
+<div class="load-data">
+  <img src="/assets/pig/ezgif.com-crop.gif" style="width:45px; margin: 25px; margin-top: 10px;" alt="">
+</div>
+<div class="open-menu" style="">
+  <button>
+    <img src="/assets/pig/menu.png" style="width: 40px;" alt="">
+  </button>
+</div>
+
+<div class="side-menu customize">
+
+  <div class="col-sm-12" style="">
+    <!-- <div class="card" style="width: 100%; height: 700px;"> -->
+    <!-- <h4 class="">Customize</h4> -->
+    <!-- <div class="card-body customize"> -->
+
+    <div class="step2" style="width: 100%; height: 100%; display: none;">
+      <div style="margin: 10px">
+        <img src="/assets/pig/logo1_trans.png" style="width:50%" alt="">
+      </div>
+      <hr>
+      <div class="close-menu">
+        <button>
+          <img src="/assets/pig/cros.png" style="width: 30px;" alt="">
+        </button>
+      </div>
+      <!-- <div style="margin: 10px 0 40px 0;">
+        <h2 style="display: inline-block; margin: 10px">Customize</h2>
+        
+      </div> -->
+      <div class="step2-2" style="">
+        <div style="width: 100%;">
+          <div class="cardcustomM">
+            <h5 style="font-size:17px; font-weight: lighter;">DATASET</h5>
+            <!-- <h5 class="card-body"> -->
+            <div class="type_select_map">
+              <!-- <div class="type_select_map"> -->
+              <!-- <select class="typeMap" style="width: 95%" [(ngModel)]="selecteddataType" name="selecteddatatype">
+                  <option *ngFor="let oT of select_dataType">{{ oT }}</option>
+                </select> -->
+              <!-- </div> -->
+
+            </div>
+            <!-- </h5> -->
+          </div>
+          <br>
+          <div class="cardcustomM indexselect">
+            <h5 style="font-size:17px; font-weight: lighter;">INDEX</h5>
+            <!-- <h5 class="card-body"> -->
+            <div class="type_index">
+              <!-- <div class="type_index">
+                <select class="type_index" style="width: 95%" [(ngModel)]="selecteddataTypeIndex" name="selecteddataTypeIndex">
+                  <option *ngFor="let oTs of select_dataTypeIndex">{{ oTs }}</option>
+                </select>
+              </div> -->
+
+            </div>
+            <!-- </h5> -->
+          </div>
+          <br>
+          <div class="cardcustomM selectPeriod" style="display: none">
+            <h5 style="font-size:17px; font-weight: lighter;">PERIOD</h5>
+            <div class="initYear">
+            </div>
+            <div class="endYear">
+            </div>
+            <!-- <h5 class="card-body"> -->
+            <!-- From
+            <br>
+            <select class="yearS" style="width: 45%" [(ngModel)]="selectedYear" name="selectedYear">
+              <option *ngFor="let i of selectYear">{{ i }}</option>
+            </select>
+            -
+            <select class="monthS" style="width: 45%" [(ngModel)]="selectedPeriod" name="selectedPeriod">
+              <option *ngFor="let j of selectPeriod">{{ j }}</option>
+            </select>
+            <br> To
+            <br>
+            <select class="yearS2" style="width: 45%" [(ngModel)]="selectedYear2" name="selectedYear2">
+              <option *ngFor="let k of selectYear2">{{ k }}</option>
+            </select>
+            -
+            <select class="monthS2" style="width: 45%" [(ngModel)]="selectedPeriod2" name="selectedPeriod2">
+              <option *ngFor="let l of selectPeriod2">{{ l }}</option>
+            </select> -->
+
+            <!-- </h5> -->
+          </div>
+          <br>
+          <!-- <p class="statusCant">Cant Next</p> -->
+        </div>
+      </div>
+      <hr>
+      <div style="width: 100%; height: 80%;">
+        <button class="visualize_but">VISUZLIZE</button>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- 
+<div class="open-detail" style="">
+  <button>
+    <img src="/assets/pig/menu.png" style="width: 40px;" alt="">
+  </button>
+</div> -->
+
+
+<div class="visualize" style="width: 80%; margin: auto">
+
+
+  <div class="side-detail">
+    <div class="step3" style="width: 100%; height: 100%;">
+      <div class="side-detail-in" style=" text-align: center ;width:20%; height: 200px; float: left">
+        <h2 class="" style="margin: 15px; font-size: 25px;">Select Country/Custom</h2>
+        <div style="width: 90%; margin: auto">
+          <!-- <div class="custom-right"> -->
+          <!-- <h5>SELECTION ON MAP</h5> -->
+          <!-- <h5 class="card-body"> -->
+          <div class="type_select_show">
+            <select [(ngModel)]="selectedOnMap" (change)="onSelectFeature($event.target.value)" name="selectOnmap"
+              style="width: 100%">
+              <option *ngFor="let o of selectArr">{{ o }}</option>
+            </select>
+          </div>
+          <!-- </h5> -->
+          <!-- </div> -->
+        </div>
+      </div>
+
+      <div class="side-detail-in" style="width:20%; float: left;  height: 200px;">
+        <h4 class="header">Average</h4>
+        <p style="font-size: 20px; margin: 10px">Mean :
+          <span class="meanAVGStat">--</span>
+        </p>
+        <p style="font-size: 20px; margin: 10px">Max :
+          <span class="maxAVGStat">--</span>
+        </p>
+        <p style="font-size: 20px; margin: 10px">Min :
+          <span class="minAVGStat">--</span>
+        </p>
+      </div>
+      <div class="side-detail-in" style="width:20%; float: left;  height: 200px;">
+        <h4 class="header">Trend</h4>
+        <p style="font-size: 20px; margin: 10px">Mean :
+          <span class="meanTRENDStat">--</span>
+        </p>
+        <p style="font-size: 20px; margin: 10px">Max :
+          <span class="maxTRENDStat">--</span>
+        </p>
+        <p style="font-size: 20px; margin: 10px">Min :
+          <span class="minTRENDStat">--</span>
+        </p>
+      </div>
+
+      <div class="side-detail-in" style="width:37%; float: left;  height: 200px;">
+        <h4 class="header">Description</h4>
+        <!-- <table>
+        <tr>
+          <td style="width: 50%;">
+              <div class="description_index_left">No Data</div></td>
+          <td style="width: 50%;">
+              <div class="description_index_right">No Data</div></td>
+        </tr>
+      </table> -->
+        <div style="width: 100%; float: left;">
+          <div class="description_index_left" style="padding-left: 10px;">No Data</div>
+        </div>
+        <!-- <div style="width: 50%; float: left;">
+          <div class="description_index_right">No Data</div>
+        </div> -->
+
+
+      </div>
+    </div>
+
+  </div>
+
+  <div class="">
+    <div class="head" style="">
+      <h1 style="padding: 40px 0 20px 0; font-size: 95px;">{{title}}</h1>
+    </div>
+  </div>
+  <div class="row" style="text-align: center; margin:15px">
+    <h4 class="nameMap" style="width: 100%; height: 5%; display: none">Data :
+      <span class="typeMapShow"></span>
+      , Index :
+      <span class="shortNameIndex"></span>
+      , Period :
+      <span class="dateRange1"></span> -
+      <span class="dateRange2"></span>
+      <!-- <span class="monthShow"></span> Day :
+      <span class="dayShow"></span> -->
+    </h4>
+  </div>
+
+
+
+  <div class="row" style="width:100%; margin-right: 0; margin-left: 0;">
+    <!-- <div class="col-sm-3" style="">
+      <div class="card" style="width: 100%; height: 700px;">
+        <h4 class="card-header">Customize</h4>
+        <div class="card-body customize">
+
+          <div class="step2" style="width: 100%; height: 100%;">
+            STEP 2
+            <div class="step2-2" style="">
+              <div style="width: 100%; height: 450px;">
+                <div class="card">
+                  <h5>DATASET</h5>
+                  <h5 class="card-body">
+                    <div class="type_select_map">
+                      <div class="type_select_map">
+                        <select class="typeMap" style="width: 95%" [(ngModel)]="selecteddataType" name="selecteddatatype">
+                          <option *ngFor="let oT of select_dataType">{{ oT }}</option>
+                        </select>
+                      </div>
+
+                    </div>
+                  </h5>
+                </div>
+                <div class="card">
+                  <h5>TYPE INDEX</h5>
+                  <h5 class="card-body">
+                    <div class="type_index">
+                      <div class="type_index">
+                        <select class="type_index" style="width: 95%" [(ngModel)]="selecteddataTypeIndex" name="selecteddataTypeIndex">
+                          <option *ngFor="let oTs of select_dataTypeIndex">{{ oTs }}</option>
+                        </select>
+                      </div>
+
+                    </div>
+                  </h5>
+                </div>
+                <div class="card">
+                  <h5>PERIOD</h5>
+                  <h5 class="card-body">
+                    From
+                    <br>
+                    <select class="yearS" style="width: 45%" [(ngModel)]="selectedYear" name="selectedYear">
+                      <option *ngFor="let i of selectYear">{{ i }}</option>
+                    </select>
+                    -
+                    <select class="monthS" style="width: 45%" [(ngModel)]="selectedPeriod" name="selectedPeriod">
+                      <option *ngFor="let j of selectPeriod">{{ j }}</option>
+                    </select>
+                    <br> To
+                    <br>
+                    <select class="yearS2" style="width: 45%" [(ngModel)]="selectedYear2" name="selectedYear2">
+                      <option *ngFor="let k of selectYear2">{{ k }}</option>
+                    </select>
+                    -
+                    <select class="monthS2" style="width: 45%" [(ngModel)]="selectedPeriod2" name="selectedPeriod2">
+                      <option *ngFor="let l of selectPeriod2">{{ l }}</option>
+                    </select>
+
+                  </h5>
+                </div>
+                <p class="statusCant">Cant Next</p>
+              </div>
+            </div>
+            <hr>
+            <div style="width: 100%; height: 80%;">
+              <button class="next">next</button>
+            </div>
+          </div>
+          <div class="step3" style="display: none; width: 100%; height: 100%;">
+            STEP 3
+            <div style="width: 100%; height: 370px;">
+              <div class="card">
+                <h5>SELECTION ON MAP</h5>
+                <h5 class="card-body">
+                  <div class="type_select_show">
+                    <select [(ngModel)]="selectedOnMap" (change)="onSelectFeature($event.target.value)" name="selectOnmap">
+                      <option *ngFor="let o of selectArr">{{ o }}</option>
+                    </select>
+                  </div>
+                </h5>
+              </div>
+            </div>
+
+            <hr>
+            <div style="width: 100%; height: 80%;">
+              <button class="Refresh">Refresh</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div> -->
+    <div class="showMapAll" style="width: 68%;">
+      <!-- <div class="row" style="margin-left: 0"> -->
+      <!-- <div class="col-sm-12" st> -->
+      <div style="height: 100%; padding: 5px">
+        <div class="cardcustom" style="width: 100%; height: 100%; margin: auto; ">
+
+          <p style="text-align: center; font-size:  22px; font-weight: lighter; height: 5%;">Average</p>
+          <div id="mapAVG" class="mapAVG" style="width: 100%; height: 85%; "></div>
+          <div id="sourceDataColorAVG_legend"
+            style="width: 90%; height: 10%; text-align: center; margin: auto; padding-top: 2%;"></div>
+        </div>
+      </div>
+
+      <!-- </div> -->
+      <!-- </div> -->
+
+
+      <!-- <div class="card" style="width: 100%; height: 100%;">
+        <div id="mapAVG" class="mapAVG" style="width: 100%; height: 90%;"></div>
+        <div style="width: 100%; height: 10%;"></div>
+      </div> -->
+      <!-- <div class="row" style="margin: 15px 0;">
+        <div class="col-sm-6" st>
+          <div class="cardcustom" style="width: 100%; height: 100%;">
+
+            <p style="text-align: center; font-size:  22px; font-weight: lighter;">Average</p>
+            <div id="mapAVG" class="mapAVG" style="width: 100%; height: 80%;"></div>
+            <div id="sourceDataColorAVG_legend" style="width: 90%; height: 10%; text-align: center; margin: auto"></div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+
+          <div class="cardcustom" style="width: 100%; height: 100%;">
+
+            <p style="text-align: center; font-size:  22px; font-weight: lighter;">Trend</p>
+            <div id="mapTrend" class="mapTrend" style="width: 100%; height: 80%;"></div>
+            <div id="sourceDataColorTrend_legend" style="width: 70%; height: 10%; text-align: center; margin: auto"></div>
+          </div>
+        </div>
+      </div> -->
+
+    </div>
+    <div class="showMapAll" style="height:100%; width: 32%; margin-left: -10px; padding: 0 0 0 12px;">
+      <!-- <div class="row" style="margin: 15px 0; width: 98.3%; margin: auto; margin-top: 20px; margin-bottom: 20px;"> -->
+      <!-- <div class="row"> -->
+
+      <!-- </div> -->
+
+      <!-- <div class="row"> -->
+      <!-- <div class="col-sm-6" style="padding-left: 0;"> -->
+      <!-- <div class="card" style="width: 100%; height: 100%;">
+              
+                          <p style="text-align: center">Eof RAW</p>
+                          <div id="mapPCA_real" class="mapPCA_real" style="width: 100%; height: 80%;"></div>
+                          <div id="sourceDataColorPCA_RAW_legend" style="width: 70%; height: 10%; text-align: center; margin: auto"></div>
+                        </div> -->
+      <div style="padding: 5px;">
+        <div class="cardcustom" style="width: 100%; height: 100%;">
+
+          <p style="text-align: center; font-size:  22px; font-weight: lighter;">Variance <span class="varianceMap"></span></p>
+          <div id="map_var" class="map_var" style="width: 100%; height: 80%;"></div>
+          <div id="sourceDataColorVAR_legend" style="width: 70%; height: 10%; text-align: center; margin: auto"></div>
+        </div>
+      </div>
+
+      <div style="padding: 5px">
+
+        <div class="cardcustom" style="width: 100%; height: 100%;">
+          <p style="text-align: center; font-size:  22px; font-weight: lighter; margin: 0;">EOF 
+            <span class="eof_index"></span>
+          </p>
+          <div id="mapPCA" class="mapPCA" style="width: 100%; height: 80%;"></div>
+          <div id="sourceDataColorPCA_legend" style="width: 70%; height: 10%; text-align: center; margin: auto"></div>
+        </div>
+      </div>
+      <!-- </div> -->
+      <!-- </div> -->
+
+      <!-- </div> -->
+
+    </div>
+
+
+  </div>
+
+
+  <div class="showGraphAll">
+
+    <!-- <div style="text-align: center">
+      <h2>Graph</h2>
+    </div> -->
+    <!-- <h1 style="margin: 30px 30px; text-align: left;">Graph</h1> -->
+    <!-- <div class="cardcustom" style="margin: 2px;width: 33%; display: inline-block ;" id="chartSeason"></div> -->
+    <!-- <div class="cardcustom" style="margin: 2px;width: 33%; display: inline-block ;" id="chartAvgANN"></div> -->
+    <!-- <div class="cardcustom" style="margin: 2px;width: 33%; display: inline-block ;" id="chartPCA_variance"></div> -->
+    <!-- <div class="cardcustom" style="margin: 2px;width: 100%; display: inline-block ;" id="chartPCA"></div> -->
+
+    <!-- <div class="graph set_margin_middle">
+      <div class="row">
+        <div class="graph_1_2">
+          
+        </div>
+        <div class="graph_1_2">
+          <div id="graphV1"></div>
+        </div>
+      </div>
+    </div> -->
+  </div>
+</div>
+<div class="footer">
+  <!-- Footer -->
+</div>
+
+<!-- 
+<div class="visualize">
+  <div class="row">
+    <h1>{{ title }}</h1>
+  </div>
+  <div class="row">
+    <div class="set_middle">
+      Select Date :
+      <input type="date" name="select">
+    </div>
+  </div>
+  <div class="type_select_show">
+    <select [(ngModel)]="selectedOnMap" (change)="onSelectFeature($event.target.value)" name="selectOnmap">
+      <option *ngFor="let o of selectArr">{{ o }}</option>
+    </select>
+    <div>
+      You select : {{ selectedOnMap }}
+    </div>
+  </div>
+  <div class="type_select_map">
+    <select [(ngModel)]="selecteddataType" (change)="onSelectMap($event.target.value)" name="selecteddatatype">
+      <option *ngFor="let oT of select_dataType">{{ oT }}</option>
+    </select>
+    <div>
+      You select : {{ selecteddataType }}
+    </div>
+  </div>
+  <div class="row">
+    <div id="mapV" class="mapV"></div>
+    <div id="popup" class="ol-popup">
+      <a href="#" id="popup-closer" class="ol-popup-closer"></a>
+      <div id="popup-content"></div>
+    </div>
+  </div>
+  <div class="row">
+    <div>
+      <h2 style="text-align: center">Mean :
+        <span class="meanStat"></span>
+      </h2>
+    </div>
+  </div>
+  <div class="graph set_margin_middle">
+    <div class="row">
+      <div class="graph_1_2">
+        <div id="graphV"></div>
+      </div>
+      <div class="graph_1_2">
+        <div id="graphV1"></div>
+      </div>
+    </div>
+  </div>
+
+</div> -->
