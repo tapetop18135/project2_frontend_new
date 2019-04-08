@@ -19,7 +19,7 @@ import * as Highcharts from 'highcharts'
 import { noSelection } from './mapInteract';
 import { debug } from 'util';
 
-export var domainIP = "http://35.198.201.166:3300" //"http://127.0.0.1:3200" //"http://35.240.215.162:3200" //"http://13.251.157.101:8080"//"http://127.0.0.1:3200" //"http://13.251.157.101:8080"// "http://127.0.0.1:3200"//"http://13.251.157.101:8080" //"http://127.0.0.1:8080" //"" // "http://127.0.0.1:3200" //"http://18.136.209.215:8080"// //
+export var domainIP = "http://35.198.201.166:3200" //"http://127.0.0.1:3200" //"http://35.240.215.162:3200" //"http://13.251.157.101:8080"//"http://127.0.0.1:3200" //"http://13.251.157.101:8080"// "http://127.0.0.1:3200"//"http://13.251.157.101:8080" //"http://127.0.0.1:8080" //"" // "http://127.0.0.1:3200" //"http://18.136.209.215:8080"// //
 
 var map_X_temp = undefined
 
@@ -217,7 +217,7 @@ export var AVG_map = function (year1, year2, dataset, index_ = "") {
     // tempSourceLayer["sourceData_trend_X"] = undefined
     tempMapLayer["gridDataTrend_X"] = undefined
     // $(".step3").css("display", "none")  
-    // debugger
+    //  
     $(".step3").hide(100)
     
     $(".showGraphAll").empty()
@@ -256,6 +256,7 @@ export var AVG_map = function (year1, year2, dataset, index_ = "") {
         return res.json();
     }).then(function (result) {
         checkLoader += 1
+        var countGraph = 0
         //    
         // alert("Have Graph Data")
         // if (dataset == "GHCN") {
@@ -286,6 +287,14 @@ export var AVG_map = function (year1, year2, dataset, index_ = "") {
             tempSend["season"] = tempSend["graphSeasonal"]["axisY"]
         }
 
+        if(tempSend["graphSeasonal"]["axisY"].length > 1){
+            countGraph += 1
+        }
+        // if(tempSend["graphAVG_ann"]["axisY"].length > 1){
+        //     countGraph += 1
+        // }
+        
+        debugger
         $(".varianceMap").html(`${tempSend["index_name"]} annormaly ${tempSend["unit"]} <sup>2</sup>`)
         // } else {
 
@@ -321,7 +330,7 @@ export var AVG_map = function (year1, year2, dataset, index_ = "") {
         // $(".chartPCA_variance").empty()
         // $(".chartSeason").empty()
 
-        if (tempSend["season"] == undefined) {
+        if (countGraph == 0) {
             // alert("dont have Season")
             if ($("#chartSeason").length > 0) {
                 // alert("เคยมี")
@@ -417,7 +426,7 @@ export var AVG_map = function (year1, year2, dataset, index_ = "") {
                 color: "black",
                 marker: {enabled: false},
             })
-            debugger
+             
         }
 
         // if (tempSend["graphAVG"]["axisY"].length > 0) {
@@ -444,7 +453,7 @@ export var AVG_map = function (year1, year2, dataset, index_ = "") {
 
         if (tempSend["season"] == undefined) {
             // alert("SssssSSSS")
-            // debugger
+            //  
             // highchartsModule["HighchartSeason"] = Highcharts.chart('chartSeason', {
             //     title: {
             //         text: 'Graph Seasonal Global'
@@ -467,7 +476,7 @@ export var AVG_map = function (year1, year2, dataset, index_ = "") {
             // });
         } else {
             
-            debugger
+             
             highchartsModule["HighchartSeason"] = genChart(
                 "chartSeason",
                 tempSend["graphSeasonal"]["axisY"],
@@ -641,7 +650,7 @@ export var AVG_map = function (year1, year2, dataset, index_ = "") {
         //     "#FCE2D2" ,"#F9F0EB", "#EDF2F5", "#DAE9F2", "#C2DDEC", "#A2CDE3", "#7EB8D7", "#569FC9", 
         //     "#3A87BD", "#2870B1", "#1A5899", "#0C3D73"
         // ]
-        debugger
+         
         temp_max_min["max_minTREND"] = find_max_min(tempSend["mapTREND"])
         tempGeojson["geojsonTREND"] = genGeojson(tempSend["lat_list"], tempSend["lon_list"], tempSend["mapTREND"])
         //  
@@ -983,7 +992,7 @@ export function genGeojson(list_lat, list_lon, data_list = "", typePca_or_trend 
     if (typePca_or_trend) {
         multi = 1000
     }
-    debugger
+     
     //  
     var points = {
         type: 'FeatureCollection',
@@ -1720,7 +1729,7 @@ $(document).ready(function () {
         tempSend["month2"] = "- Non select -"
         $(".indexselect option:selected").each(function () {
             checkStep2()
-            debugger
+             
             var monthArr = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
             var temp = $(this).text()
             tempSend["type_index"] = temp
@@ -1785,7 +1794,7 @@ $(document).ready(function () {
             }
 
             $(".selctYearinit").on('change', function (e) {
-                debugger
+                 
                 $(".selctYearinit option:selected").each(function () {
                     var temp = $(this).text()
                     tempSend["year1"] = temp
@@ -1922,7 +1931,7 @@ $(document).ready(function () {
                         checkStep2()
 
                         $(".selctYearinit").on('change', function (e) {
-                            debugger
+                             
                             $(".selctYearinit option:selected").each(function () {
                                 var temp = $(this).text()
                                 tempSend["year1"] = temp
@@ -2020,7 +2029,7 @@ $(document).ready(function () {
 
         var year1Start = `${tempSend["year1"]}-${getMonth(tempSend["month1"])}`
         var year2Start = `${tempSend["year2"]}-${getMonth(tempSend["month2"])}`
-        debugger
+         
         var temp_index = tempSend["type_index"]
 
         AVG_map(year1Start, year2Start, tempSend["dataset"], temp_index)
@@ -2142,7 +2151,7 @@ function resetAll() {
 }
 
 function checkLoadFunction(){
-    debugger
+     
     if(checkLoader == 4){
         $(".load-data").fadeOut(1000, function(){
             $(".open-menu button").fadeIn(1000)
