@@ -25,6 +25,38 @@ var map_X_temp = undefined
 
 var state_legend = 0
 
+var setMap = {
+    "dataset": undefined,
+    "global" : {
+        "big":{
+            "zoomInitUse" : 2,
+            "setCenterPoint" : [0, 0],
+            "maxZoomUse": 6.5,
+            "minZoomUse": 1,
+        },
+        "small":{
+            "zoomInitUse" : 1,
+            "setCenterPoint" : [0, 0],
+            "maxZoomUse": 6.5,
+            "minZoomUse": 0.5,
+        }
+    },
+    "soutEastAsia" : {
+        "big":{
+            "zoomInitUse" : 3.95,
+            "setCenterPoint" : [115, 5],
+            "maxZoomUse": 6.5,
+            "minZoomUse": 0.5,
+        },
+        "small":{
+            "zoomInitUse" : 3,
+            "setCenterPoint" : [115, 5],
+            "maxZoomUse": 6.5,
+            "minZoomUse": 0.5,
+        }
+    }
+}
+
 export var tempSend = {
     "mapAVG": undefined,
     "mapTREND": undefined,
@@ -216,7 +248,7 @@ export var vectorLayerGeo = new Vector({
 
 export var AVG_map = function (year1, year2, dataset, index_ = "") {
     checkLoader = 0
-    
+
     tempSend["data_list"] = []
     tempSend["year_global"] = [year1, year2]
     // tempSend["mapTrend_X"] = undefined
@@ -226,7 +258,7 @@ export var AVG_map = function (year1, year2, dataset, index_ = "") {
     // $(".step3").css("display", "none")  
     //  
     $(".step3").hide(100)
-    
+
     $(".showGraphAll").empty()
     // tempMapLayer["gridDataTrend_X"] = undefined
     // if ((dataset == "ghcndex" || dataset == "GHCN") && index_ != "") {
@@ -267,6 +299,7 @@ export var AVG_map = function (year1, year2, dataset, index_ = "") {
         //    
         // alert("Have Graph Data")
         // if (dataset == "GHCN") {
+        debugger
 
         // tempSend["graphAVG"]["axisX"] = result["graph"]["graphAVG"]["axisX"]
         // tempSend["graphAVG"]["axisY"] = result["graph"]["graphAVG"]["axisY"]
@@ -294,13 +327,13 @@ export var AVG_map = function (year1, year2, dataset, index_ = "") {
             tempSend["season"] = tempSend["graphSeasonal"]["axisY"]
         }
 
-        if(tempSend["graphSeasonal"]["axisY"].length > 1){
+        if (tempSend["graphSeasonal"]["axisY"].length > 1) {
             countGraph += 1
         }
         // if(tempSend["graphAVG_ann"]["axisY"].length > 1){
         //     countGraph += 1
         // }
-    
+
         $(".varianceMap").html(`${tempSend["index_name"]} annormaly (${tempSend["unit"]}<sup>2</sup>)`)
         // } else {
 
@@ -308,11 +341,12 @@ export var AVG_map = function (year1, year2, dataset, index_ = "") {
         setDisplay(tempSend["datasetName"], tempSend["index_name"], tempSend["year1"], tempSend["year2"])
         //  
 
-        
+
 
         $(".shortNameIndex").html(`${tempSend["short_name"]} (${tempSend["index_name"]})`)
 
-        var descript_index = `
+        try {
+            var descript_index = `
             ${ tempSend["type_measure"].charAt(0).toUpperCase() + tempSend["type_measure"].slice(1)} ${tempSend["method"]} 
             <br>
             ${tempSend["description"]}
@@ -321,6 +355,19 @@ export var AVG_map = function (year1, year2, dataset, index_ = "") {
             <br>
             Dataset is ${tempSend["datasetName"]}
             `
+          }catch{
+            var descript_index = `
+            ${ tempSend["type_measure"]} ${tempSend["method"]} 
+            <br>
+            ${tempSend["description"]}
+            <br>
+            Unit is ${tempSend["unit"]}
+            <br>
+            Dataset is ${tempSend["datasetName"]}
+            `
+          }
+
+        
         //     Index is ${tempSend["short_name"]} ( ${tempSend["index_name"]} )
         //     <br>
         //     Method is ${tempSend["method"]}
@@ -331,8 +378,8 @@ export var AVG_map = function (year1, year2, dataset, index_ = "") {
         // `
 
         $(".description_index_left").html(descript_index)
-        
-        
+
+
         // $(".chartPCA_variance").empty()
         // $(".chartSeason").empty()
 
@@ -412,7 +459,7 @@ export var AVG_map = function (year1, year2, dataset, index_ = "") {
 
 
 
-        
+
         if (tempSend["graphAVG_ann"]["axisY"].length > 0) {
             highchartsModule["HighchartAVG_ANN"] = genChart(
                 "chartAvgANN",
@@ -430,9 +477,9 @@ export var AVG_map = function (year1, year2, dataset, index_ = "") {
                 name: `Global (trend)`,
                 data: tempSend["graphAVG_ann"]["reg"],
                 color: "black",
-                marker: {enabled: false},
+                marker: { enabled: false },
             })
-             
+
         }
 
         // if (tempSend["graphAVG"]["axisY"].length > 0) {
@@ -481,8 +528,8 @@ export var AVG_map = function (year1, year2, dataset, index_ = "") {
             //     }
             // });
         } else {
-            
-             
+
+
             highchartsModule["HighchartSeason"] = genChart(
                 "chartSeason",
                 tempSend["graphSeasonal"]["axisY"],
@@ -656,7 +703,7 @@ export var AVG_map = function (year1, year2, dataset, index_ = "") {
         //     "#FCE2D2" ,"#F9F0EB", "#EDF2F5", "#DAE9F2", "#C2DDEC", "#A2CDE3", "#7EB8D7", "#569FC9", 
         //     "#3A87BD", "#2870B1", "#1A5899", "#0C3D73"
         // ]
-         
+
         temp_max_min["max_minTREND"] = find_max_min(tempSend["mapTREND"])
         tempGeojson["geojsonTREND"] = genGeojson(tempSend["lat_list"], tempSend["lon_list"], tempSend["mapTREND"])
         //  
@@ -722,7 +769,7 @@ export var AVG_map = function (year1, year2, dataset, index_ = "") {
         // setRightDisplay(find_AVG_2D(tempSend["mapAVG"]), temp_max_min["max_minAVG"][0], temp_max_min["max_minAVG"][1])
         // alert("SSSSSSSSSSSSSSSSSSSXXXXXXXXXXXXXXXXXXXX")
         // $(".step3").animate({ width: "show" }, 400)
-        
+
         $(".step3").show(100)
         checkLoadFunction()
     })
@@ -742,7 +789,7 @@ export var AVG_map = function (year1, year2, dataset, index_ = "") {
     }).then(function (result) {
         // alert("Have Map Pca and Graph Pca")
         //  
-        debugger
+           
         checkLoader += 1
         // if (dataset == "GHCN") {
         console.log("PCA", result)
@@ -847,7 +894,7 @@ export var AVG_map = function (year1, year2, dataset, index_ = "") {
 
         // setRightDisplay(find_AVG_2D(tempSend["mapAVG"]), temp_max_min["max_minAVG"][0], temp_max_min["max_minAVG"][1])
         // alert("")
-        $(".blackTransition").css("width","100%")
+        $(".blackTransition").css("width", "100%")
         checkLoadFunction()
     })
 
@@ -999,7 +1046,7 @@ export function genGeojson(list_lat, list_lon, data_list = "", typePca_or_trend 
     if (typePca_or_trend) {
         multi = 1000
     }
-     
+
     //  
     var points = {
         type: 'FeatureCollection',
@@ -1095,13 +1142,39 @@ export function genMap(target) {
         tempMapLayer["baselayer"] = BasevectorLayerGeo//basesource
         //  
     }
+    
+    var setCenterPoint = [0, 0]
+    var maxZoomUse = 6.5
+    var minZoomUse = 1
 
+    if(tempSend["dataset"] == "ghcndex" || tempSend["dataset"] == "hadex2"){
+        if (target == "mapAVG") {
+            var zoomInit = setMap["global"]["big"]["zoomInitUse"]
+            setCenterPoint = setMap["global"]["big"]["setCenterPoint"]
+            maxZoomUse = setMap["global"]["big"]["maxZoomUse"]
+            minZoomUse = setMap["global"]["big"]["minZoomUse"]
+        } else {
+            var zoomInit = setMap["global"]["small"]["zoomInitUse"]
+            setCenterPoint = setMap["global"]["small"]["setCenterPoint"]
+            maxZoomUse = setMap["global"]["small"]["maxZoomUse"]
+            minZoomUse = setMap["global"]["small"]["minZoomUse"]
+        }
 
-    if (target == "mapAVG") {
-        var zoomInit = 2
-    } else {
-        var zoomInit = 1
+    }else{
+        if (target == "mapAVG") {
+            var zoomInit = setMap["soutEastAsia"]["big"]["zoomInitUse"]
+            setCenterPoint = setMap["soutEastAsia"]["big"]["setCenterPoint"]
+            maxZoomUse = setMap["soutEastAsia"]["big"]["maxZoomUse"]
+            minZoomUse = setMap["soutEastAsia"]["big"]["minZoomUse"]
+        } else {
+            var zoomInit = setMap["soutEastAsia"]["small"]["zoomInitUse"]
+            setCenterPoint = setMap["soutEastAsia"]["small"]["setCenterPoint"]
+            maxZoomUse = setMap["soutEastAsia"]["small"]["maxZoomUse"]
+            minZoomUse = setMap["soutEastAsia"]["small"]["minZoomUse"]
+        }
+
     }
+
 
     var map = new WebGLMap({
         target: target,
@@ -1112,9 +1185,9 @@ export function genMap(target) {
         // ],
         view: new View({
             projection: 'EPSG:4326',
-            center: [0, 0], // [155,0]
-            maxZoom: 6.5,
-            minZoom: 1,
+            center: setCenterPoint, // [155,0]
+            maxZoom: maxZoomUse,
+            minZoom: minZoomUse,
             zoom: zoomInit
         })
     });
@@ -1247,22 +1320,22 @@ function createLegend(colorScale, domainScale, target) {
 }
 
 export function genGridData(geojson, gridSize, max_min, name, ary_color) {
-      
+
     var useColorArr = []
 
     var max = max_min[0]
     var min = max_min[1]
 
-    if(state_legend == 0 && name == "sourceDataColorAVG"){
+    if (state_legend == 0 && name == "sourceDataColorAVG") {
         var max = max_min[0]
         var min = max_min[1]
-          
-    }else if(state_legend == 1  && name == "sourceDataColorAVG"){  
+
+    } else if (state_legend == 1 && name == "sourceDataColorAVG") {
         var max = parseFloat($("#maxLegend").val())
         var min = parseFloat($("#minLegend").val())
     }
 
-      
+
 
     var tem = []
     if (name == "sourceDataColorAVG" || name == "sourceDataColorVAR") {
@@ -1273,8 +1346,8 @@ export function genGridData(geojson, gridSize, max_min, name, ary_color) {
         // tem = tem.sort((a, b) => a - b)
         // console.log(tem)
         tem = lineSpace(min, max, ary_color.length)
-        
-        
+
+
 
     } else {
         tem = lineSpace(min, max, ary_color.length)
@@ -1301,17 +1374,17 @@ export function genGridData(geojson, gridSize, max_min, name, ary_color) {
     }
 
     //   
-    if(tempSend["type_measure"] == "precipitation" && name == "sourceDataColorAVG"){
+    if (tempSend["type_measure"] == "precipitation" && name == "sourceDataColorAVG") {
         useColorArr = tempColors["AVG_colors_precipt"]
         //   
-    }else if(tempSend["type_measure"] == "temperature" && name == "sourceDataColorAVG"){
+    } else if (tempSend["type_measure"] == "temperature" && name == "sourceDataColorAVG") {
         useColorArr = tempColors["AVG_colors"]
         //   
-    }else{
+    } else {
         useColorArr = ary_color
         //   
     }
-    
+
     //   
 
     // var val_max = max + Math.abs(min)
@@ -1323,7 +1396,7 @@ export function genGridData(geojson, gridSize, max_min, name, ary_color) {
 
     // var temp0 = Math.floor(max / 2)
 
-   
+
 
     createLegend(useColorArr, tem, name)
 
@@ -1453,7 +1526,7 @@ export function genChart(target, data1, period, nameData1, nameGraph, nameSub, t
             }
         },
         series: [
-            {   
+            {
                 name: nameData1,
                 marker: {
                     symbol: 'bubble'
@@ -1764,7 +1837,7 @@ $(document).ready(function () {
         tempSend["month2"] = "- Non select -"
         $(".indexselect option:selected").each(function () {
             checkStep2()
-             
+
             var monthArr = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
             var temp = $(this).text()
             tempSend["type_index"] = temp
@@ -1829,7 +1902,7 @@ $(document).ready(function () {
             }
 
             $(".selctYearinit").on('change', function (e) {
-                 
+
                 $(".selctYearinit option:selected").each(function () {
                     var temp = $(this).text()
                     tempSend["year1"] = temp
@@ -1966,7 +2039,7 @@ $(document).ready(function () {
                         checkStep2()
 
                         $(".selctYearinit").on('change', function (e) {
-                             
+
                             $(".selctYearinit option:selected").each(function () {
                                 var temp = $(this).text()
                                 tempSend["year1"] = temp
@@ -2039,6 +2112,7 @@ $(document).ready(function () {
         // setTimeout(function () {
         //     $(".open-menu button").css("display", "block")
         // }, 500)
+
         $(".step2").css("display", "none")
         if (map_all["map_avg"] === undefined &&
             map_all["map_trend"] === undefined &&
@@ -2056,7 +2130,19 @@ $(document).ready(function () {
             map_all["map_pca"] = genMap("mapPCA")
             map_all["map_pca_real"] = genMap("mapPCA_real")
             map_all["map_var"] = genMap("map_var")
+        }else{
+            if(tempSend["dataset"] == "ghcndex" || tempSend["dataset"] == "hadex2"){
+                setMapFunction(setMap["global"]["big"]["setCenterPoint"],setMap["global"]["big"]["maxZoomUse"],setMap["global"]["big"]["minZoomUse"],setMap["global"]["big"]["zoomInitUse"],"map_avg")
+                setMapFunction(setMap["global"]["small"]["setCenterPoint"],setMap["global"]["small"]["maxZoomUse"],setMap["global"]["small"]["minZoomUse"],setMap["global"]["small"]["zoomInitUse"],"map_pca")
+                setMapFunction(setMap["global"]["small"]["setCenterPoint"],setMap["global"]["small"]["maxZoomUse"],setMap["global"]["small"]["minZoomUse"],setMap["global"]["small"]["zoomInitUse"],"map_var")
+            }else{
+                setMapFunction(setMap["soutEastAsia"]["big"]["setCenterPoint"],setMap["soutEastAsia"]["big"]["maxZoomUse"],setMap["soutEastAsia"]["big"]["minZoomUse"],setMap["soutEastAsia"]["big"]["zoomInitUse"],"map_avg")
+                setMapFunction(setMap["soutEastAsia"]["small"]["setCenterPoint"],setMap["soutEastAsia"]["small"]["maxZoomUse"],setMap["soutEastAsia"]["small"]["minZoomUse"],setMap["soutEastAsia"]["small"]["zoomInitUse"],"map_pca")
+                setMapFunction(setMap["soutEastAsia"]["small"]["setCenterPoint"],setMap["soutEastAsia"]["small"]["maxZoomUse"],setMap["soutEastAsia"]["small"]["minZoomUse"],setMap["soutEastAsia"]["small"]["zoomInitUse"],"map_var")
+            }
         }
+
+           
 
         // var year1Start = `${tempSend["year1"]}-${getMonth(tempSend["month1"])}-01`
         // var year2Start = `${tempSend["year2"]}-${getMonth(tempSend["month2"])}-01`
@@ -2064,7 +2150,7 @@ $(document).ready(function () {
 
         var year1Start = `${tempSend["year1"]}-${getMonth(tempSend["month1"])}`
         var year2Start = `${tempSend["year2"]}-${getMonth(tempSend["month2"])}`
-         
+
         var temp_index = tempSend["type_index"]
 
         AVG_map(year1Start, year2Start, tempSend["dataset"], temp_index)
@@ -2143,11 +2229,11 @@ $(document).ready(function () {
     //     // alert("Reflesh Page")
     //     location.reload();
     // })
-    $("#selectLegned").on("change", function(){
-        if(this.checked) {
+    $("#selectLegned").on("change", function () {
+        if (this.checked) {
             $(".customMaxMin").fadeIn(500)
             state_legend = 1
-        }else{
+        } else {
             $(".customMaxMin").fadeOut(500)
             state_legend = 0
         }
@@ -2181,7 +2267,7 @@ function checkStep2() {
         $(".visualize_but").hide()
         return
     }
-
+    // setMap["dataset"] = 
     $(".visualize_but").fadeIn(500)
     // $(".step2 p.statusCant").html("Can next")
 
@@ -2194,12 +2280,19 @@ function resetAll() {
 
 }
 
-function checkLoadFunction(){
-     
-    if(checkLoader == 4){
-        $(".load-data").fadeOut(1000, function(){
+function checkLoadFunction() {
+
+    if (checkLoader == 4) {
+        $(".load-data").fadeOut(1000, function () {
             $(".open-menu button").fadeIn(1000)
         })
-        
+
     }
+}
+
+function setMapFunction( center, max, min, zoominit, key){
+    map_all[key].getView().setCenter(center)
+    map_all[key].getView().setMaxZoom(max)
+    map_all[key].getView().setMinZoom(min)
+    map_all[key].getView().setZoom(zoominit)
 }
