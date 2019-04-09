@@ -19,7 +19,7 @@ import * as Highcharts from 'highcharts'
 import { noSelection } from './mapInteract';
 import { debug } from 'util';
 
-export var domainIP = "http://35.198.201.166:3300"//"http://127.0.0.1:3200"//"http://35.198.201.166:3300" //"http://127.0.0.1:3200" //"http://35.240.215.162:3200" //"http://13.251.157.101:8080"//"http://127.0.0.1:3200" //"http://13.251.157.101:8080"// "http://127.0.0.1:3200"//"http://13.251.157.101:8080" //"http://127.0.0.1:8080" //"" // "http://127.0.0.1:3200" //"http://18.136.209.215:8080"// //
+export var domainIP = "http://35.185.183.31:3300"//"http://35.198.201.166:3300" //"http://127.0.0.1:3200" //"http://35.240.215.162:3200" //"http://13.251.157.101:8080"//"http://127.0.0.1:3200" //"http://13.251.157.101:8080"// "http://127.0.0.1:3200"//"http://13.251.157.101:8080" //"http://127.0.0.1:8080" //"" // "http://127.0.0.1:3200" //"http://18.136.209.215:8080"// //
 
 var map_X_temp = undefined
 
@@ -553,7 +553,7 @@ export var AVG_map = function (year1, year2, dataset, index_ = "") {
         // if (dataset == "GHCN") {
         //  
         tempSend["type_measure"] = result["detail"]["detail"]["type_measure"]
-        // debugger
+        //   
         checkLoader += 1
         tempSend["unit"] = result["detail"]["detail"]["unit"]
         console.log("AVG", result)
@@ -742,6 +742,7 @@ export var AVG_map = function (year1, year2, dataset, index_ = "") {
     }).then(function (result) {
         // alert("Have Map Pca and Graph Pca")
         //  
+        debugger
         checkLoader += 1
         // if (dataset == "GHCN") {
         console.log("PCA", result)
@@ -1246,7 +1247,7 @@ function createLegend(colorScale, domainScale, target) {
 }
 
 export function genGridData(geojson, gridSize, max_min, name, ary_color) {
-    debugger
+      
     var useColorArr = []
 
     var max = max_min[0]
@@ -1255,13 +1256,13 @@ export function genGridData(geojson, gridSize, max_min, name, ary_color) {
     if(state_legend == 0 && name == "sourceDataColorAVG"){
         var max = max_min[0]
         var min = max_min[1]
-        debugger
+          
     }else if(state_legend == 1  && name == "sourceDataColorAVG"){  
         var max = parseFloat($("#maxLegend").val())
         var min = parseFloat($("#minLegend").val())
     }
 
-    debugger
+      
 
     var tem = []
     if (name == "sourceDataColorAVG" || name == "sourceDataColorVAR") {
@@ -1299,19 +1300,19 @@ export function genGridData(geojson, gridSize, max_min, name, ary_color) {
 
     }
 
-    // debugger
+    //   
     if(tempSend["type_measure"] == "precipitation" && name == "sourceDataColorAVG"){
         useColorArr = tempColors["AVG_colors_precipt"]
-        // debugger
+        //   
     }else if(tempSend["type_measure"] == "temperature" && name == "sourceDataColorAVG"){
         useColorArr = tempColors["AVG_colors"]
-        // debugger
+        //   
     }else{
         useColorArr = ary_color
-        // debugger
+        //   
     }
     
-    // debugger
+    //   
 
     // var val_max = max + Math.abs(min)
     // for (let i = 0; i < ary_color.length; i++) {
