@@ -23,6 +23,8 @@ export var domainIP = "http://35.198.201.166:3300" //"http://127.0.0.1:3200" //"
 
 var map_X_temp = undefined
 
+var state_legend = 0
+
 export var tempSend = {
     "mapAVG": undefined,
     "mapTREND": undefined,
@@ -299,7 +301,7 @@ export var AVG_map = function (year1, year2, dataset, index_ = "") {
         //     countGraph += 1
         // }
     
-        $(".varianceMap").html(`${tempSend["index_name"]} annormaly ${tempSend["unit"]} <sup>2</sup>`)
+        $(".varianceMap").html(`${tempSend["index_name"]} annormaly (${tempSend["unit"]}<sup>2</sup>)`)
         // } else {
 
         // }
@@ -311,7 +313,7 @@ export var AVG_map = function (year1, year2, dataset, index_ = "") {
         $(".shortNameIndex").html(`${tempSend["short_name"]} (${tempSend["index_name"]})`)
 
         var descript_index = `
-            ${tempSend["type_measure"]} ( ${tempSend["method"]} )
+            ${ tempSend["type_measure"].charAt(0).toUpperCase() + tempSend["type_measure"].slice(1)} ${tempSend["method"]} 
             <br>
             ${tempSend["description"]}
             <br>
@@ -418,7 +420,7 @@ export var AVG_map = function (year1, year2, dataset, index_ = "") {
                 tempSend["graphAVG_ann"]["axisX"],
                 // tempSend["index_name"],
                 "Global",
-                "Graph Ann Average Global",
+                "Area average time series",
                 // `period ${year1} - ${year2}`,
                 "",
                 tempSend["type_measure"], tempSend["unit"], "red", "line"
@@ -487,7 +489,7 @@ export var AVG_map = function (year1, year2, dataset, index_ = "") {
                 tempSend["graphSeasonal"]["axisX"],
                 // tempSend["index_name"],
                 "Global",
-                "Graph Seasonal Global",
+                "Seasonal Cycle",
                 // `${year1} - ${year2}`,
                 "",
                 tempSend["type_measure"], tempSend["unit"], "red", "line"
@@ -551,7 +553,7 @@ export var AVG_map = function (year1, year2, dataset, index_ = "") {
         // if (dataset == "GHCN") {
         //  
         tempSend["type_measure"] = result["detail"]["detail"]["type_measure"]
-        debugger
+        // debugger
         checkLoader += 1
         tempSend["unit"] = result["detail"]["detail"]["unit"]
         console.log("AVG", result)
@@ -835,11 +837,11 @@ export var AVG_map = function (year1, year2, dataset, index_ = "") {
             "chartPCA_variance",
             tempSend["graphPCA"]["variance"]["axisY"],
             tempSend["graphPCA"]["variance"]["axisX"],
-            "Variance",
-            "Graph PCA Variance",
+            "Principal Components",
+            "Explained variance",
             // `period ${year1} - ${year2}`,
             "",
-            tempSend["type_measure"], "", "orange", "line"
+            "Variance", "", "orange", "line"
         )
 
         // setRightDisplay(find_AVG_2D(tempSend["mapAVG"]), temp_max_min["max_minAVG"][0], temp_max_min["max_minAVG"][1])
@@ -1244,11 +1246,22 @@ function createLegend(colorScale, domainScale, target) {
 }
 
 export function genGridData(geojson, gridSize, max_min, name, ary_color) {
-
+    debugger
     var useColorArr = []
+
     var max = max_min[0]
     var min = max_min[1]
 
+    if(state_legend == 0 && name == "sourceDataColorAVG"){
+        var max = max_min[0]
+        var min = max_min[1]
+        debugger
+    }else if(state_legend == 1  && name == "sourceDataColorAVG"){  
+        var max = parseFloat($("#maxLegend").val())
+        var min = parseFloat($("#minLegend").val())
+    }
+
+    debugger
 
     var tem = []
     if (name == "sourceDataColorAVG" || name == "sourceDataColorVAR") {
@@ -1286,19 +1299,19 @@ export function genGridData(geojson, gridSize, max_min, name, ary_color) {
 
     }
 
-    debugger
+    // debugger
     if(tempSend["type_measure"] == "precipitation" && name == "sourceDataColorAVG"){
         useColorArr = tempColors["AVG_colors_precipt"]
-        debugger
+        // debugger
     }else if(tempSend["type_measure"] == "temperature" && name == "sourceDataColorAVG"){
         useColorArr = tempColors["AVG_colors"]
-        debugger
+        // debugger
     }else{
         useColorArr = ary_color
-        debugger
+        // debugger
     }
     
-    debugger
+    // debugger
 
     // var val_max = max + Math.abs(min)
     // for (let i = 0; i < ary_color.length; i++) {
@@ -2129,6 +2142,15 @@ $(document).ready(function () {
     //     // alert("Reflesh Page")
     //     location.reload();
     // })
+    $("#selectLegned").on("change", function(){
+        if(this.checked) {
+            $(".customMaxMin").fadeIn(500)
+            state_legend = 1
+        }else{
+            $(".customMaxMin").fadeOut(500)
+            state_legend = 0
+        }
+    })
 
 });
 
