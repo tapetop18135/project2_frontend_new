@@ -19,7 +19,7 @@ import * as Highcharts from 'highcharts'
 import { noSelection } from './mapInteract';
 import { debug } from 'util';
 
-export var domainIP = "http://35.198.201.166:3200" //"http://127.0.0.1:3200" //"http://35.240.215.162:3200" //"http://13.251.157.101:8080"//"http://127.0.0.1:3200" //"http://13.251.157.101:8080"// "http://127.0.0.1:3200"//"http://13.251.157.101:8080" //"http://127.0.0.1:8080" //"" // "http://127.0.0.1:3200" //"http://18.136.209.215:8080"// //
+export var domainIP = "http://35.198.201.166:3300" //"http://127.0.0.1:3200" //"http://35.240.215.162:3200" //"http://13.251.157.101:8080"//"http://127.0.0.1:3200" //"http://13.251.157.101:8080"// "http://127.0.0.1:3200"//"http://13.251.157.101:8080" //"http://127.0.0.1:8080" //"" // "http://127.0.0.1:3200" //"http://18.136.209.215:8080"// //
 
 var map_X_temp = undefined
 
@@ -175,6 +175,11 @@ var tempColors = {
         "#cfffff", "#aff6ff", "#9defff", "#86daff", "#6dc1ff", "#4297ff", "#2050ff", "#050fd9"
     ].reverse(),
 
+    "AVG_colors_precipt": [
+        "#9f0000", "#d50000", "#ff0000", "#ff4900", "#ff9000", "#ffc400", "#ffec00", "#ffff66",
+        "#cfffff", "#aff6ff", "#9defff", "#86daff", "#6dc1ff", "#4297ff", "#2050ff", "#050fd9"
+    ],
+
     "Trend_colors_python": [
         "#9F1228", "#9F1228", "#BA2823", "#CC4C44", "#DD7059", "#EC9374", "#F6B394", "#FBCCB4",
         "#FCE2D2", "#F9F0EB", "#EDF2F5", "#DAE9F2", "#C2DDEC", "#A2CDE3", "#7EB8D7", "#569FC9",
@@ -199,7 +204,7 @@ var checkLoader = 0
 
 export var vectorLayerGeo = new Vector({
     source: new souceVector({
-        url: `/assets/staticfile/country.json`,
+        url: `/assets/staticfile/geoMedium.json`,
         format: new GeoJSON(),
         // wrapX: false
     }),
@@ -209,7 +214,7 @@ export var vectorLayerGeo = new Vector({
 
 export var AVG_map = function (year1, year2, dataset, index_ = "") {
     checkLoader = 0
-
+    
     tempSend["data_list"] = []
     tempSend["year_global"] = [year1, year2]
     // tempSend["mapTrend_X"] = undefined
@@ -293,8 +298,7 @@ export var AVG_map = function (year1, year2, dataset, index_ = "") {
         // if(tempSend["graphAVG_ann"]["axisY"].length > 1){
         //     countGraph += 1
         // }
-        
-        debugger
+    
         $(".varianceMap").html(`${tempSend["index_name"]} annormaly ${tempSend["unit"]} <sup>2</sup>`)
         // } else {
 
@@ -546,6 +550,8 @@ export var AVG_map = function (year1, year2, dataset, index_ = "") {
         // alert("Have Average Map")
         // if (dataset == "GHCN") {
         //  
+        tempSend["type_measure"] = result["detail"]["detail"]["type_measure"]
+        debugger
         checkLoader += 1
         tempSend["unit"] = result["detail"]["detail"]["unit"]
         console.log("AVG", result)
@@ -571,8 +577,6 @@ export var AVG_map = function (year1, year2, dataset, index_ = "") {
 
 
         // tempMapLayer["gridDataTrend_X"] = genGeojson(tempSend["lat_list"], tempSend["lon_list"], tempSend["mapAVG"])
-
-
 
         // } else {
 
@@ -1075,7 +1079,7 @@ export function genMap(target) {
     if (tempMapLayer["baselayer"] == undefined) {
         var BasevectorLayerGeo = new Vector({
             source: new souceVector({
-                url: `/assets/staticfile/country.json`,
+                url: `/assets/staticfile/geoMedium.json`,
                 format: new GeoJSON(),
                 // wrapX: false
             }),
@@ -1241,6 +1245,7 @@ function createLegend(colorScale, domainScale, target) {
 
 export function genGridData(geojson, gridSize, max_min, name, ary_color) {
 
+    var useColorArr = []
     var max = max_min[0]
     var min = max_min[1]
 
@@ -1254,6 +1259,8 @@ export function genGridData(geojson, gridSize, max_min, name, ary_color) {
         // tem = tem.sort((a, b) => a - b)
         // console.log(tem)
         tem = lineSpace(min, max, ary_color.length)
+        
+        
 
     } else {
         tem = lineSpace(min, max, ary_color.length)
@@ -1279,7 +1286,19 @@ export function genGridData(geojson, gridSize, max_min, name, ary_color) {
 
     }
 
-
+    debugger
+    if(tempSend["type_measure"] == "precipitation" && name == "sourceDataColorAVG"){
+        useColorArr = tempColors["AVG_colors_precipt"]
+        debugger
+    }else if(tempSend["type_measure"] == "temperature" && name == "sourceDataColorAVG"){
+        useColorArr = tempColors["AVG_colors"]
+        debugger
+    }else{
+        useColorArr = ary_color
+        debugger
+    }
+    
+    debugger
 
     // var val_max = max + Math.abs(min)
     // for (let i = 0; i < ary_color.length; i++) {
@@ -1290,7 +1309,9 @@ export function genGridData(geojson, gridSize, max_min, name, ary_color) {
 
     // var temp0 = Math.floor(max / 2)
 
-    createLegend(ary_color, tem, name)
+   
+
+    createLegend(useColorArr, tem, name)
 
 
 
@@ -1303,7 +1324,7 @@ export function genGridData(geojson, gridSize, max_min, name, ary_color) {
         var y = coordinate[1] - gridSize[1] / 2
         var pop = parseInt(feature.getProperties().value)
         //  
-        var rgb = d3.rgb(colorSelect(ary_color, tem)(pop))
+        var rgb = d3.rgb(colorSelect(useColorArr, tem)(pop))
 
 
 
@@ -1496,15 +1517,15 @@ export function genChartInteract(target, data1, period, nameData1, nameGraph, na
                             updateMapWithDate("sourceDataColorPCA", tempGeojson["geojsonPCA"])
                             // var t = highchartsModule["HighchartPCA_time"]
 
-                            highchartsModule["HighchartPCA_time"].addSeries({
-                                name: `Graph PCA Time Series ${e.point.category}`,
-                                data: tempSend["graphPCA"]["time"]["axisY"][e.point.category - 1],
-                                color: "red"
-                            })
+                            // highchartsModule["HighchartPCA_time"].addSeries({
+                            //     name: `Graph PCA Time Series ${e.point.category}`,
+                            //     data: tempSend["graphPCA"]["time"]["axisY"][e.point.category - 1],
+                            //     color: "red"
+                            // })
 
-                            highchartsModule["HighchartPCA_time"].series[0].remove()
+                            // highchartsModule["HighchartPCA_time"].series[0].remove()
 
-                            $(".eof_index").html(e.point.category)
+                            // $(".eof_index").html(e.point.category)
 
 
 
