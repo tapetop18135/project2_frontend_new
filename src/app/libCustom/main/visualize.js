@@ -1666,7 +1666,7 @@ fetch(`${domainIP}/api/getDataset`).then(function (res) {
     // <option>e</option>
     // <option>f</option>
     htmlselect += `</select>`
-    alert("sss")
+    // alert("sss")
     $(`.type_select_map`).html(htmlselect)
     functionSelect()
     fetch(`${domainIP}/api/getdetailDataset/${datasets[0]}`).then(function (res) {
