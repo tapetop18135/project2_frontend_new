@@ -19,7 +19,7 @@ import * as Highcharts from 'highcharts'
 import { noSelection } from './mapInteract';
 import { debug } from 'util';
 
-export var domainIP =  "http://35.185.183.31:3500" //"http://35.185.183.31:3300"//"http://35.198.201.166:3300" //"http://127.0.0.1:3200" //"http://35.240.215.162:3200" //"http://13.251.157.101:8080"//"http://127.0.0.1:3200" //"http://13.251.157.101:8080"// "http://127.0.0.1:3200"//"http://13.251.157.101:8080" //"http://127.0.0.1:8080" //"" // "http://127.0.0.1:3200" //"http://18.136.209.215:8080"// //
+export var domainIP = "http://35.185.183.31:3700" //"http://35.185.183.31:3300"//"http://35.198.201.166:3300" //"http://127.0.0.1:3200" //"http://35.240.215.162:3200" //"http://13.251.157.101:8080"//"http://127.0.0.1:3200" //"http://13.251.157.101:8080"// "http://127.0.0.1:3200"//"http://13.251.157.101:8080" //"http://127.0.0.1:8080" //"" // "http://127.0.0.1:3200" //"http://18.136.209.215:8080"// //
 
 var map_X_temp = undefined
 
@@ -27,30 +27,30 @@ var state_legend = 0
 
 var setMap = {
     "dataset": undefined,
-    "global" : {
-        "big":{
-            "zoomInitUse" : 2,
-            "setCenterPoint" : [0, 0],
+    "global": {
+        "big": {
+            "zoomInitUse": 2,
+            "setCenterPoint": [0, 0],
             "maxZoomUse": 6.5,
             "minZoomUse": 1,
         },
-        "small":{
-            "zoomInitUse" : 1,
-            "setCenterPoint" : [0, 0],
+        "small": {
+            "zoomInitUse": 1,
+            "setCenterPoint": [0, 0],
             "maxZoomUse": 6.5,
             "minZoomUse": 0.5,
         }
     },
-    "soutEastAsia" : {
-        "big":{
-            "zoomInitUse" : 3.95,
-            "setCenterPoint" : [115, 5],
+    "soutEastAsia": {
+        "big": {
+            "zoomInitUse": 3.95,
+            "setCenterPoint": [115, 5],
             "maxZoomUse": 6.5,
             "minZoomUse": 0.5,
         },
-        "small":{
-            "zoomInitUse" : 3,
-            "setCenterPoint" : [115, 5],
+        "small": {
+            "zoomInitUse": 3,
+            "setCenterPoint": [115, 5],
             "maxZoomUse": 6.5,
             "minZoomUse": 0.5,
         }
@@ -355,7 +355,7 @@ export var AVG_map = function (year1, year2, dataset, index_ = "") {
             <br>
             Dataset is ${tempSend["datasetName"]}
             `
-          }catch{
+        } catch{
             var descript_index = `
             ${ tempSend["type_measure"]} ${tempSend["method"]} 
             <br>
@@ -365,9 +365,9 @@ export var AVG_map = function (year1, year2, dataset, index_ = "") {
             <br>
             Dataset is ${tempSend["datasetName"]}
             `
-          }
+        }
 
-        
+
         //     Index is ${tempSend["short_name"]} ( ${tempSend["index_name"]} )
         //     <br>
         //     Method is ${tempSend["method"]}
@@ -789,7 +789,7 @@ export var AVG_map = function (year1, year2, dataset, index_ = "") {
     }).then(function (result) {
         // alert("Have Map Pca and Graph Pca")
         //  
-           
+
         checkLoader += 1
         // if (dataset == "GHCN") {
         console.log("PCA", result)
@@ -1142,12 +1142,12 @@ export function genMap(target) {
         tempMapLayer["baselayer"] = BasevectorLayerGeo//basesource
         //  
     }
-    
+
     var setCenterPoint = [0, 0]
     var maxZoomUse = 6.5
     var minZoomUse = 1
 
-    if(tempSend["dataset"] == "ghcndex" || tempSend["dataset"] == "hadex2"){
+    if (tempSend["dataset"] == "ghcndex" || tempSend["dataset"] == "hadex2") {
         if (target == "mapAVG") {
             var zoomInit = setMap["global"]["big"]["zoomInitUse"]
             setCenterPoint = setMap["global"]["big"]["setCenterPoint"]
@@ -1160,7 +1160,7 @@ export function genMap(target) {
             minZoomUse = setMap["global"]["small"]["minZoomUse"]
         }
 
-    }else{
+    } else {
         if (target == "mapAVG") {
             var zoomInit = setMap["soutEastAsia"]["big"]["zoomInitUse"]
             setCenterPoint = setMap["soutEastAsia"]["big"]["setCenterPoint"]
@@ -1666,9 +1666,9 @@ fetch(`${domainIP}/api/getDataset`).then(function (res) {
     // <option>e</option>
     // <option>f</option>
     htmlselect += `</select>`
-
+    alert("sss")
     $(`.type_select_map`).html(htmlselect)
-
+    functionSelect()
     fetch(`${domainIP}/api/getdetailDataset/${datasets[0]}`).then(function (res) {
         return res.json();
     }).then(function (result) {
@@ -1943,145 +1943,9 @@ $(document).ready(function () {
         });
     })
 
-
-    $(".selctDatatset").on('change', function (e) {
-        // alert("ssss")
-        // $(".customize .step2 .next").css("display", "none")
-        // tempSend["type_index"] = "- Non select -"
-        $(".selctDatatset option:selected").each(function () {
-            checkStep2()
-            console.log($(this).text())
-            var temp = $(this).text()
-            tempSend["dataset"] = temp
-            if (temp != "- Non select -") {
-
-                $(".indexselect").slideDown(500)
-                fetch(`${domainIP}/api/getdetailDataset/${temp}`).then(function (res) {
-                    return res.json();
-                }).then(function (result) {
-                    var monthArr = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-
-                    tempSend["customizeData"] = result[temp]
-                    tempSend["customizeData"]["key"] = temp
-                    var indexs = result[temp]["indexs"]
-
-                    var htmlselectIndex =
-                        // `<select class="selctIndex" style="width: 95%"><option>- Non select -</option>`
-                        `<select class="selctIndex" style="width: 95%">`
-                    for (var i = 0; i < indexs.length; i += 1) {
-                        htmlselectIndex += `<option>${indexs[i]}</option>`
-                    }
-                    // 
-                    // <option>d</option>
-                    // <option>e</option>
-                    // <option>f</option>
-                    htmlselectIndex += `</select>`
-
-                    $(`.type_index`).html(htmlselectIndex)
+    functionSelect();
 
 
-                    if (temp != "- Non select -") {
-                        // alert()
-                        console.log(temp)
-                        // for
-                        var tempIndexD = tempSend["customizeData"]
-                        var init = tempIndexD["start"]
-                        var end = tempIndexD["stop"]
-
-                        var selectY1 = "selctYearinit"
-                        var selectM1 = "selctMonthinit"
-                        var selectY2 = "selctYearend"
-                        var selectM2 = "selctMonthend"
-
-                        tempSend["type_index"] = indexs[0]
-                        tempSend["year1"] = init
-                        tempSend["year2"] = end
-                        tempSend["month1"] = monthArr[0]
-                        tempSend["month2"] = monthArr[11]
-
-                        var htmlselectP1 =
-                            `<select class="${selectY1}" style="width: 45%">`
-                        for (var i = init; i <= end; i += 1) {
-                            htmlselectP1 += `<option>${i}</option>`
-                        }
-
-                        htmlselectP1 += `</select> - <select class="${selectM1}" style="width: 45%">`
-
-                        for (var i = 0; i < 13; i += 1) {
-                            htmlselectP1 += `<option>${monthArr[i]}</option>`
-                        }
-                        htmlselectP1 += `</select>`
-
-                        $(`.initYear`).html("From <br>" + htmlselectP1)
-                        ////////////////////////////////////////////////////////////////
-                        var htmlselectP1 =
-                            `<select class="${selectY2}" style="width: 45%">`
-                        for (var i = init; i <= end; i += 1) {
-                            if (i == end) {
-                                htmlselectP1 += `<option selected="selected">${i}</option>`
-                            } else {
-                                htmlselectP1 += `<option>${i}</option>`
-                            }
-                        }
-
-                        htmlselectP1 += `</select> - <select class="${selectM2}" style="width: 45%">`
-
-                        for (var i = 0; i < 13; i += 1) {
-                            if (i == 11) {
-                                htmlselectP1 += `<option selected="selected">${monthArr[i]}</option>`
-                            } else {
-                                htmlselectP1 += `<option>${monthArr[i]}</option>`
-                            }
-                        }
-                        htmlselectP1 += `</select>`
-                        $(`.endYear`).html("To <br>" + htmlselectP1)
-                        $(".selectPeriod").slideDown(500)
-                        checkStep2()
-
-                        $(".selctYearinit").on('change', function (e) {
-
-                            $(".selctYearinit option:selected").each(function () {
-                                var temp = $(this).text()
-                                tempSend["year1"] = temp
-                                console.log(temp)
-                                checkStep2()
-
-                            });
-                        })
-                        $(".selctMonthinit").on('change', function (e) {
-                            $(".selctMonthinit option:selected").each(function () {
-                                var temp = $(this).text()
-                                tempSend["month1"] = temp
-                                console.log(temp)
-                                checkStep2()
-
-                            });
-                        })
-                        $(".selctYearend").on('change', function (e) {
-                            $(".selctYearend option:selected").each(function () {
-                                var temp = $(this).text()
-                                tempSend["year2"] = temp
-                                console.log(temp)
-                                checkStep2()
-
-                            });
-                        })
-                        $(".selctMonthend").on('change', function (e) {
-                            $(".selctMonthend option:selected").each(function () {
-                                var temp = $(this).text()
-                                tempSend["month2"] = temp
-                                console.log(temp)
-                                checkStep2()
-
-                            });
-                        })
-                    }
-
-                })
-            }
-
-        });
-    })
 
 
 
@@ -2130,19 +1994,19 @@ $(document).ready(function () {
             map_all["map_pca"] = genMap("mapPCA")
             map_all["map_pca_real"] = genMap("mapPCA_real")
             map_all["map_var"] = genMap("map_var")
-        }else{
-            if(tempSend["dataset"] == "ghcndex" || tempSend["dataset"] == "hadex2"){
-                setMapFunction(setMap["global"]["big"]["setCenterPoint"],setMap["global"]["big"]["maxZoomUse"],setMap["global"]["big"]["minZoomUse"],setMap["global"]["big"]["zoomInitUse"],"map_avg")
-                setMapFunction(setMap["global"]["small"]["setCenterPoint"],setMap["global"]["small"]["maxZoomUse"],setMap["global"]["small"]["minZoomUse"],setMap["global"]["small"]["zoomInitUse"],"map_pca")
-                setMapFunction(setMap["global"]["small"]["setCenterPoint"],setMap["global"]["small"]["maxZoomUse"],setMap["global"]["small"]["minZoomUse"],setMap["global"]["small"]["zoomInitUse"],"map_var")
-            }else{
-                setMapFunction(setMap["soutEastAsia"]["big"]["setCenterPoint"],setMap["soutEastAsia"]["big"]["maxZoomUse"],setMap["soutEastAsia"]["big"]["minZoomUse"],setMap["soutEastAsia"]["big"]["zoomInitUse"],"map_avg")
-                setMapFunction(setMap["soutEastAsia"]["small"]["setCenterPoint"],setMap["soutEastAsia"]["small"]["maxZoomUse"],setMap["soutEastAsia"]["small"]["minZoomUse"],setMap["soutEastAsia"]["small"]["zoomInitUse"],"map_pca")
-                setMapFunction(setMap["soutEastAsia"]["small"]["setCenterPoint"],setMap["soutEastAsia"]["small"]["maxZoomUse"],setMap["soutEastAsia"]["small"]["minZoomUse"],setMap["soutEastAsia"]["small"]["zoomInitUse"],"map_var")
+        } else {
+            if (tempSend["dataset"] == "ghcndex" || tempSend["dataset"] == "hadex2") {
+                setMapFunction(setMap["global"]["big"]["setCenterPoint"], setMap["global"]["big"]["maxZoomUse"], setMap["global"]["big"]["minZoomUse"], setMap["global"]["big"]["zoomInitUse"], "map_avg")
+                setMapFunction(setMap["global"]["small"]["setCenterPoint"], setMap["global"]["small"]["maxZoomUse"], setMap["global"]["small"]["minZoomUse"], setMap["global"]["small"]["zoomInitUse"], "map_pca")
+                setMapFunction(setMap["global"]["small"]["setCenterPoint"], setMap["global"]["small"]["maxZoomUse"], setMap["global"]["small"]["minZoomUse"], setMap["global"]["small"]["zoomInitUse"], "map_var")
+            } else {
+                setMapFunction(setMap["soutEastAsia"]["big"]["setCenterPoint"], setMap["soutEastAsia"]["big"]["maxZoomUse"], setMap["soutEastAsia"]["big"]["minZoomUse"], setMap["soutEastAsia"]["big"]["zoomInitUse"], "map_avg")
+                setMapFunction(setMap["soutEastAsia"]["small"]["setCenterPoint"], setMap["soutEastAsia"]["small"]["maxZoomUse"], setMap["soutEastAsia"]["small"]["minZoomUse"], setMap["soutEastAsia"]["small"]["zoomInitUse"], "map_pca")
+                setMapFunction(setMap["soutEastAsia"]["small"]["setCenterPoint"], setMap["soutEastAsia"]["small"]["maxZoomUse"], setMap["soutEastAsia"]["small"]["minZoomUse"], setMap["soutEastAsia"]["small"]["zoomInitUse"], "map_var")
             }
         }
 
-           
+
 
         // var year1Start = `${tempSend["year1"]}-${getMonth(tempSend["month1"])}-01`
         // var year2Start = `${tempSend["year2"]}-${getMonth(tempSend["month2"])}-01`
@@ -2290,9 +2154,149 @@ function checkLoadFunction() {
     }
 }
 
-function setMapFunction( center, max, min, zoominit, key){
+function setMapFunction(center, max, min, zoominit, key) {
     map_all[key].getView().setCenter(center)
     map_all[key].getView().setMaxZoom(max)
     map_all[key].getView().setMinZoom(min)
     map_all[key].getView().setZoom(zoominit)
+}
+function functionSelect() {
+    $(".selctDatatset").on('change', function (e) {
+        // alert("ssss")
+        // $(".customize .step2 .next").css("display", "none")
+        // tempSend["type_index"] = "- Non select -"
+        $(".selctDatatset option:selected").each(function () {
+            checkStep2()
+            console.log($(this).text())
+            var temp = $(this).text()
+            tempSend["dataset"] = temp
+            if (temp != "- Non select -") {
+
+                $(".indexselect").slideDown(500)
+                fetch(`${domainIP}/api/getdetailDataset/${temp}`).then(function (res) {
+                    return res.json();
+                }).then(function (result) {
+                    var monthArr = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+
+                    tempSend["customizeData"] = result[temp]
+                    tempSend["customizeData"]["key"] = temp
+                    var indexs = result[temp]["indexs"]
+
+                    var htmlselectIndex =
+                        // `<select class="selctIndex" style="width: 95%"><option>- Non select -</option>`
+                        `<select class="selctIndex" style="width: 95%">`
+                    for (var i = 0; i < indexs.length; i += 1) {
+                        htmlselectIndex += `<option>${indexs[i]}</option>`
+                    }
+                    // 
+                    // <option>d</option>
+                    // <option>e</option>
+                    // <option>f</option>
+                    htmlselectIndex += `</select>`
+
+                    $(`.type_index`).html(htmlselectIndex)
+
+
+                    if (temp != "- Non select -") {
+                        // alert()
+                        console.log(temp)
+                        // for
+                        var tempIndexD = tempSend["customizeData"]
+                        var init = tempIndexD["start"]
+                        var end = tempIndexD["stop"]
+
+                        var selectY1 = "selctYearinit"
+                        var selectM1 = "selctMonthinit"
+                        var selectY2 = "selctYearend"
+                        var selectM2 = "selctMonthend"
+
+                        tempSend["type_index"] = indexs[0]
+                        tempSend["year1"] = init
+                        tempSend["year2"] = end
+                        tempSend["month1"] = monthArr[0]
+                        tempSend["month2"] = monthArr[11]
+
+                        var htmlselectP1 =
+                            `<select class="${selectY1}" style="width: 45%">`
+                        for (var i = init; i <= end; i += 1) {
+                            htmlselectP1 += `<option>${i}</option>`
+                        }
+
+                        htmlselectP1 += `</select> - <select class="${selectM1}" style="width: 45%">`
+
+                        for (var i = 0; i < 13; i += 1) {
+                            htmlselectP1 += `<option>${monthArr[i]}</option>`
+                        }
+                        htmlselectP1 += `</select>`
+
+                        $(`.initYear`).html("From <br>" + htmlselectP1)
+                        ////////////////////////////////////////////////////////////////
+                        var htmlselectP1 =
+                            `<select class="${selectY2}" style="width: 45%">`
+                        for (var i = init; i <= end; i += 1) {
+                            if (i == end) {
+                                htmlselectP1 += `<option selected="selected">${i}</option>`
+                            } else {
+                                htmlselectP1 += `<option>${i}</option>`
+                            }
+                        }
+
+                        htmlselectP1 += `</select> - <select class="${selectM2}" style="width: 45%">`
+
+                        for (var i = 0; i < 13; i += 1) {
+                            if (i == 11) {
+                                htmlselectP1 += `<option selected="selected">${monthArr[i]}</option>`
+                            } else {
+                                htmlselectP1 += `<option>${monthArr[i]}</option>`
+                            }
+                        }
+                        htmlselectP1 += `</select>`
+                        $(`.endYear`).html("To <br>" + htmlselectP1)
+                        $(".selectPeriod").slideDown(500)
+                        checkStep2()
+
+                        $(".selctYearinit").on('change', function (e) {
+
+                            $(".selctYearinit option:selected").each(function () {
+                                var temp = $(this).text()
+                                tempSend["year1"] = temp
+                                console.log(temp)
+                                checkStep2()
+
+                            });
+                        })
+                        $(".selctMonthinit").on('change', function (e) {
+                            $(".selctMonthinit option:selected").each(function () {
+                                var temp = $(this).text()
+                                tempSend["month1"] = temp
+                                console.log(temp)
+                                checkStep2()
+
+                            });
+                        })
+                        $(".selctYearend").on('change', function (e) {
+                            $(".selctYearend option:selected").each(function () {
+                                var temp = $(this).text()
+                                tempSend["year2"] = temp
+                                console.log(temp)
+                                checkStep2()
+
+                            });
+                        })
+                        $(".selctMonthend").on('change', function (e) {
+                            $(".selctMonthend option:selected").each(function () {
+                                var temp = $(this).text()
+                                tempSend["month2"] = temp
+                                console.log(temp)
+                                checkStep2()
+
+                            });
+                        })
+                    }
+
+                })
+            }
+
+        });
+    })
 }
